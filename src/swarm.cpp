@@ -44,7 +44,7 @@ public:
 
     	for(unsigned i = 0; i < data.robots.size(); i++){
         	if(data.robots[i].id() != id) {
-            	output.push_back(SensorData(sqrt(pow(data.robots[i].x() - thisRobot.x(),2) + pow(data.robots[i].y() - thisRobot.y(),2)), data.robots[i].theta()));
+            	output.push_back(SensorData(sqrt(pow(data.robots[i].x() - thisRobot.x(),2) + pow(data.robots[i].y() - thisRobot.y(),2)), atan2(data.robots[i].y() - thisRobot.y(), data.robots[i].x() - thisRobot.x())));
         	}
     	}
     	return output;
