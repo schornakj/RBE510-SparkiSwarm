@@ -57,6 +57,11 @@ void arcadeDrive(float speed, float sway) {
   //}
 }
 
+void differentialDrive(float speedLeft, float speedRight) {
+  driveMotor(false, speedRight);
+  driveMotor(true, speedLeft);
+}
+
 
 void loop() {
   if (Serial1.available()) {
@@ -74,23 +79,15 @@ void loop() {
   if (started && inc_data[list_end - 1] == '\n') {
     for (unsigned i = list_end - 1; i < DATA_LENGTH; i++) inc_data[i] = 0;
     int id;
-    char speedbuf[32];
-    char swaybuf[32];
-    sscanf(inc_data, "%i %s %s", &id, &speedbuf, &swaybuf);
+    char speedLBuf[32];
+    char speedRBuf[32];
+    sscanf(inc_data, "%i %s %s", &id, &speedLBuf, &speedRBuf);
 
-    if(speedbuf[0] == '-'){
-      float open = atof(swaybuf);
-      if(open > 0.5){
-        sparki.gripperOpen();
-      }else{
-        sparki.gripperClose();
-      }
-      
-    }else{
-      float speed = atof(speedbuf);
-      float sway = atof(swaybuf);
-      if (id == ID) arcadeDrive(speed, sway);
-    }
+    float speedLeft = atof(speedLBuf);
+    float speedRight = atof(speedRBuf);
+    //if (id == ID) arcadeDrive(speed, sway);
+    if (id == ID) differentialDrive(speedLeft, speedRight);
+    
     list_end = 0;
     started = false;
   }

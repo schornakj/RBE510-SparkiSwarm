@@ -227,6 +227,26 @@ void FieldComputer::arcadeDrive(int id, float speed, float sway){
 	<< id << " with speed: " << speed << " and sway: " << sway << std::endl;
 }
 
+void FieldComputer::differentialDrive(int id, float leftSpeed, float rightSpeed){
+	int sockfd = NetUtil::getClientSocket(ip.c_str());
+	if (sockfd < 0) {
+		if(verbose)std::cout << "FieldComputer could not be reached..." << std::endl;
+		return;
+	}
+	std::stringstream strStream;
+	std::string send_buffer = "DIFFD\n";
+	write(sockfd, send_buffer.c_str(), send_buffer.size());
+	send_buffer.clear();
+	strStream << id << " ";
+	strStream << leftSpeed << " ";
+	strStream << rightSpeed;
+	send_buffer = strStream.str();
+	write(sockfd, send_buffer.c_str(), send_buffer.size());
+	close(sockfd);
+	if(verbose)std::cout << "Requested to differential drive id: "
+	<< id << " with speed_L: " << leftSpeed << " and speed_R: " << rightSpeed << std::endl;
+}
+
 void FieldComputer::openGripper(int id){
 	int sockfd = NetUtil::getClientSocket(ip.c_str());
 	if (sockfd < 0) {
