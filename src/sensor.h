@@ -22,7 +22,7 @@ Robot getRobot(int id, FieldData data){
     	return Robot(-1);
 	}
 
-// For a specific robot, measure the distances and angles to all its neighbors. Return a vector of readings for neighbors closer than the specified threshold	
+// For a specific robot, measure the distances and angles to all its neighbors. Return a vector of readings for neighbors closer than the specified threshold.	
 vector<SensorData> SimulateSensor(int inputID, FieldData inputData, float sensorThreshold) {
 	// Use field data derived from the server's computer vision algorithm to measure the distance to neighboring robots.
 	vector<SensorData> output;
@@ -42,6 +42,7 @@ vector<SensorData> SimulateSensor(int inputID, FieldData inputData, float sensor
 	return output;
 }
 
+// Get the sensor readings for a specific robot ID
 vector<Reading> GetRobotSensorReading(int inputID, vector<Reading> readings) {
 	for (unsigned i = 0; i < readings.size(); i++) {
 		if (readings[i].id == inputID) {
