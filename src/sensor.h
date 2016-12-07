@@ -9,8 +9,7 @@
 
 using namespace std;
 
-float sensorThreshold = 30;
-
+// Get a specific Robot using its ID and the field data
 Robot getRobot(int id, FieldData data){
     	Robot robot(id);
     	bool found = false;
@@ -23,7 +22,8 @@ Robot getRobot(int id, FieldData data){
     	return Robot(-1);
 	}
 
-vector<SensorData> SimulateSensor(int inputID, FieldData inputData) {
+// For a specific robot, measure the distances and angles to all its neighbors. Return a vector of readings for neighbors closer than the specified threshold	
+vector<SensorData> SimulateSensor(int inputID, FieldData inputData, float sensorThreshold) {
 	// Use field data derived from the server's computer vision algorithm to measure the distance to neighboring robots.
 	vector<SensorData> output;
 	
