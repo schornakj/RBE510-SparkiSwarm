@@ -1,71 +1,19 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include "rbe510.hpp"
+#include "sensor.h"
+#include "sensordata.h"
+#include "rbe510.h"
 
 using namespace std;
-
-struct SensorData {
-	float distance;
-	float theta;
-};
-
-class RobotAgent {
-	// Represents an individual robot.
-public:
-	int id;
-	FieldComputer fc;
-
-	RobotAgent(int inputID, FieldComputer inputFieldComputer) {
-		this->id = inputID;
-		this->fc = inputFieldComputer;
-	}
-
-	Robot getRobot(int id, FieldComputer fc){
-    	FieldData data = fc.getFieldData();
-    	Robot robot(id);
-    	bool found = false;
-    	for(unsigned i = 0; i < data.robots.size(); i++){
-        	if(data.robots[i].id() == robot.id()) {
-            	robot = data.robots[i];
-            	return robot;
-        	}
-    	}
-    	return Robot(-1);
-	}
-
-	vector<SensorData> SimulateSensor() {
-		// Use field data derived from the server's computer vision algorithm to measure the distance to neighboring robots.
-		vector<SensorData> output;
-
-		FieldData data = fc.getFieldData();
-
-		Robot thisRobot = getRobot(id, fc);
-
-    	for(unsigned i = 0; i < data.robots.size(); i++){
-        	if(data.robots[i].id() != id) {
-            	output.push_back(SensorData(sqrt(pow(data.robots[i].x() - thisRobot.x(),2) + pow(data.robots[i].y() - thisRobot.y(),2)), atan2(data.robots[i].y() - thisRobot.y(), data.robots[i].x() - thisRobot.x())));
-        	}
-    	}
-    	return output;
-    }
-
-	void DoFlockingController() {
-		vector<SensorData> neighborRangeData = SimulateSensor();
-		// TODO: Use fake sensor data to figure out how the robot should move to stay in formation
-
-		float leftWheelSpeed = 0;
-		float rightWheelSpeed = 0;
-		// TODO: Update Sparki code to allow differential drive
-		fc.differentialDrive(id, leftWheelSpeed, rightWheelSpeed);
-	}
-};
 
 int main(int argc, char *argv[])
 {
 	string ip = string("127.0.0.1");
 	FieldComputer fc(ip);
 	fc.enableVerbose();
+	
+	vector<Reading> robotFakeSensors;
 
 	FieldData data = fc.getFieldData();
 
@@ -75,10 +23,15 @@ int main(int argc, char *argv[])
     }
 
     while(true) {
-    	// Have each robot update itself using swarm algorithm
+		data = fc.getFieldData();
+		robotFakeSensors.clear();
+		
+		// update robot sensor readings
     	for(unsigned i = 0; i < robotAgents.size(); i++){
-        	robotAgents[i].DoFlockingController();
+        	robotFakeSensors.push_back(Reading(robotAgents[i].id, SimulateSensor(robotAgents[i].id, data)));
     	}
+		
+    	// Have each robot update itself using swarm algorithm		
     }
 	return 0;
 }
