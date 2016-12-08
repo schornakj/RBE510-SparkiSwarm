@@ -30,10 +30,12 @@ int main(int argc, char *argv[])
 		data = fc.getFieldData();
 		robotFakeSensors.clear();
 		
+		SensorData goalData(0,0);
+		
 		// update robot sensor readings
     	for(unsigned i = 0; i < robotAgents.size(); i++){
 			// TODO: for each Agent, get its ID and use the ID to simulate sensor readings for that robot
-        	robotFakeSensors.push_back(Reading(robotAgents[i].id, SimulateSensor(robotAgents[i].id, data, sensorThreshold)));
+        	robotFakeSensors.push_back(Reading(robotAgents[i].id, SimulateSensor(robotAgents[i].id, data, sensorThreshold)), goalData);
     	}
 		
     	// Have each robot update itself using swarm algorithm		

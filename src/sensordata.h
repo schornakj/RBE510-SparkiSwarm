@@ -9,6 +9,9 @@ struct SensorData {
 struct Reading {
 	int id;
 	vector<SensorData> robotData;
+	SensorData goalData;
 };
+
+typedef vector<SensorData> TVecData;
 
 #endif
