@@ -7,22 +7,26 @@ float Agent::GeneralizedLennardJones(float f_Distance){
     return -Gain/f_Distance*(fNormDistExp*fNormDistExp-fNormDistExp);
 }
 
-//SVector Agent::VectorToGoal(float f_Distance, float f_Angle){
-//    
-//}
-
 SensorData Agent::FlockingVector(){
     if (!m_tReadings.empty()) {
-        SensorData SAccum; // note : create a default constructor in SensorData.h
+        SensorData SAccum;
         for (TVecData::iterator it=m_tReadings.begin(); it=!m_tReadings.end(); ++it) {
             float fTemp;
-            if (m_tReadings.distance<1.8*TargetDistance) {
-                fTemp=GeneralizedLennardJones(m_tReadings.distance);
+            if (it->distance<1.8*TargetDistance) {
+                fTemp=GeneralizedLennardJones(it->distance);
             }
-            SAccum=AddVectors(SAccum,);
+            SAccum=AddVectors(SAccum,SensorData(fTemp,it->angle));
         }
+        SAccum.distance=SAccum.distance/m_tReadings.size();
+        if (SAccum.distance > MaxSpeed) {
+            SAccum.distance=MaxSpeed;
+        }
+        return SAccum;
     }
-    
+    else {
+        return SensorData();
+    }
+        
 }
 
 WheelSpeeds Agent::SpeedFromVector(SVector s_vector){

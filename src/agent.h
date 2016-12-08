@@ -16,6 +16,8 @@ const float Epsilon=0.01;
 const float TargetDistance=15; //Distance robot-robot in cm
 const float Gain=1000;
 const float Exponent=2;
+const float MaxSpeed=1;
+
 
 //const float ArenaWidth=231.14; //in X direction
 //const float ArenaDepth=109.86; //in Y direction

@@ -8,6 +8,8 @@
 struct SensorData {
 	float distance;
 	float theta;
+    SensorData():distance(0), theta(0) {}
+    SensorData(float distance,float theta): distance(distance), theta(theta) {}
 };
 
 struct Reading {
@@ -20,7 +22,7 @@ typedef vector<SensorData> TVecData;
 
 typedef pair<float,float> wheelSpeeds; // first is left, second is right
 
-SensorData AddVectors(SensorData inputA, SensorData inputB) {
+SensorData AddVectors(SensorData inputA, SensorData inputB) { // I don't think we should keep this in here
 	float xA, xB, xC, yA, yB, yC;
 	
 	xA = inputA.distance*cos(inputA.theta);
