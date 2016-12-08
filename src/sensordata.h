@@ -23,11 +23,11 @@ typedef pair<float,float> wheelSpeeds; // first is left, second is right
 SensorData AddVectors(SensorData inputA, SensorData inputB) {
 	float xA, xB, xC, yA, yB, yC;
 	
-	xA = inputA.distance*cos(theta);
-	xB = inputB.distance*cos(theta);
+	xA = inputA.distance*cos(inputA.theta);
+	xB = inputB.distance*cos(inputB.theta);
 	
-	yA = inputA.distance*sin(theta);
-	yB = inputB.distance*sin(theta);
+	yA = inputA.distance*sin(inputA.theta);
+	yB = inputB.distance*sin(inputB.theta);
 	
 	xC = xA + xB;
 	yC = yA + yB;
