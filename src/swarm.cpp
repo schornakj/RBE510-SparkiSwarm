@@ -20,12 +20,6 @@ int main(int argc, char *argv[])
 
 	FieldData data = fc.getFieldData();
 
-	vector<Agent> robotAgents;
-	for(unsigned i = 0; i < data.robots.size(); i++){
-		// TODO: create an Agent for each robot using the Agent constructor
-        //robotAgents.push_back(RobotAgent(data.robots[i].id(), fc));
-    }
-
     while(true) {
 		data = fc.getFieldData();
 		robotFakeSensors.clear();
@@ -33,12 +27,12 @@ int main(int argc, char *argv[])
 		SensorData goalData(0,0);
 		
 		// update robot sensor readings
-    	for(unsigned i = 0; i < robotAgents.size(); i++){
-			// TODO: for each Agent, get its ID and use the ID to simulate sensor readings for that robot
-        	robotFakeSensors.push_back(Reading(robotAgents[i].id, SimulateSensor(robotAgents[i].id, data, sensorThreshold)), goalData);
+    	for(unsigned i = 0; i < data.robots.size(); i++){
+			// TODO: for each robot, get its ID and use the ID to simulate its sensor readings
+        	robotFakeSensors.push_back(Reading(data.robots[i].id(), SimulateSensor(data.robots[i].id(), data, sensorThreshold)), goalData);
     	}
-		
-    	// Have each robot update itself using swarm algorithm		
+				
+    	// TODO: Have each robot update itself using swarm algorithm		
     }
 	return 0;
 }
