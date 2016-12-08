@@ -7,23 +7,21 @@
 #include <string>
 #include <cmath>
 //#include <algorithm>
+#include "sensordata.h"
 
 using namespace std;
 
 const float PI = 3.1415927;
-const float ArenaWidth=231.14; //in X direction
-const float ArenaDepth=109.86; //in Y direction
 const float Epsilon=0.01;
+const float TargetDistance=15; //Distance robot-robot in cm
+const float Gain=1000;
+const float Exponent=2;
 
-struct SensorData {
-    float distance;
-    float theta;
-}
+//const float ArenaWidth=231.14; //in X direction
+//const float ArenaDepth=109.86; //in Y direction
 
-//typedef pair<float, float> Direction; // (norm, angle)
-typedef pair<float,float> WheelSpeeds;
-typedef vector<Coordinate> TVecCoord;
-typedef vector<SensorData> TVecData;
+//typedef pair<float,float> WheelSpeeds; //right speed, left speed
+//typedef vector<SensorData> TVecData;
 
 /* //from assignment 2, might be useful
 struct LessThanByDistance {
@@ -45,17 +43,19 @@ public:
     
     Agent();
     
-    float GeneralizedLennardJones();
+    float GeneralizedLennardJones(float f_Distance);
     
-    //float VectorToGoal(); //not needed, simply get the angle reading to the
+    //SVector VectorToGoal(); //not needed
     
-    float FlockingVector();
+    SensorData FlockingVector();
     
     WheelSpeeds SpeedFromVector();
     
+    WheelSpeeds ControlStep(Reading s_readings);
+    
     private:
     SensorData m_tVectorToGoal;
-    TVecData m_tVectorsToRobots;
+    TVecData m_tReadings;
     //int m_nRobotId;
 };
 
