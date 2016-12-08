@@ -29,10 +29,16 @@ int main(int argc, char *argv[])
 		// update robot sensor readings
     	for(unsigned i = 0; i < data.robots.size(); i++){
 			// TODO: for each robot, get its ID and use the ID to simulate its sensor readings
-        	robotFakeSensors.push_back(Reading(data.robots[i].id(), SimulateSensor(data.robots[i].id(), data, sensorThreshold)), goalData);
+        	//robotFakeSensors.push_back(Reading(data.robots[i].id(), SimulateSensor(data.robots[i].id(), data, sensorThreshold), goalData));
+			Reading currentReading(data.robots[i].id(), SimulateSensor(data.robots[i].id(), data, sensorThreshold), goalData);
+			
+			wheelSpeeds currentSpeeds;
+			
+			fc.differentialDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
     	}
 				
     	// TODO: Have each robot update itself using swarm algorithm		
+		
     }
 	return 0;
 }

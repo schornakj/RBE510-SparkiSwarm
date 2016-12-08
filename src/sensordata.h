@@ -14,4 +14,6 @@ struct Reading {
 
 typedef vector<SensorData> TVecData;
 
+typedef pair<float,float> wheelSpeeds; // first is left, second is right
+
 #endif
