@@ -8,7 +8,7 @@ struct SensorData {
 
 struct Reading {
 	int id;
-	SensorData robotData;
-}
+	vector<SensorData> robotData;
+};
 
 #endif
