@@ -5,5 +5,8 @@ CMakeFiles/swarm.dir/src/rbe510.cpp.o
  ../src/rbe510.hpp
  /Users/multirobot/Desktop/jgschornak/RBE510-SparkiSwarm/src/rbe510.cpp
 CMakeFiles/swarm.dir/src/swarm.cpp.o
- /Users/multirobot/Desktop/jgschornak/RBE510-SparkiSwarm/src/rbe510.hpp
+ /Users/multirobot/Desktop/jgschornak/RBE510-SparkiSwarm/src/agent.h
+ /Users/multirobot/Desktop/jgschornak/RBE510-SparkiSwarm/src/rbe510.h
+ /Users/multirobot/Desktop/jgschornak/RBE510-SparkiSwarm/src/sensor.h
+ /Users/multirobot/Desktop/jgschornak/RBE510-SparkiSwarm/src/sensordata.h
  /Users/multirobot/Desktop/jgschornak/RBE510-SparkiSwarm/src/swarm.cpp

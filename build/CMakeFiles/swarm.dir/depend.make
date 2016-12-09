@@ -4,6 +4,9 @@
 CMakeFiles/swarm.dir/src/rbe510.cpp.o: ../src/rbe510.hpp
 CMakeFiles/swarm.dir/src/rbe510.cpp.o: ../src/rbe510.cpp
 
-CMakeFiles/swarm.dir/src/swarm.cpp.o: ../src/rbe510.hpp
+CMakeFiles/swarm.dir/src/swarm.cpp.o: ../src/agent.h
+CMakeFiles/swarm.dir/src/swarm.cpp.o: ../src/rbe510.h
+CMakeFiles/swarm.dir/src/swarm.cpp.o: ../src/sensor.h
+CMakeFiles/swarm.dir/src/swarm.cpp.o: ../src/sensordata.h
 CMakeFiles/swarm.dir/src/swarm.cpp.o: ../src/swarm.cpp
 

@@ -20,19 +20,19 @@ int main(int argc, char *argv[])
 
     while(true) {
 		data = fc.getFieldData();
-		robotFakeSensors.clear();
 		
 		SensorData goalData(0,0);
 		
 		// update robot sensor readings
     	for(unsigned i = 0; i < data.robots.size(); i++){
 			// for each robot, get its ID and use the ID to simulate its sensor readings
-			Reading currentReading(data.robots[i].id(), SimulateSensor(data.robots[i].id(), data, sensorThreshold), goalData);
+			vector<SensorData> currentSensor = SimulateSensor(data.robots[i].id(), data, sensorThreshold);
+			Reading currentReading(data.robots[i].id(), currentSensor, goalData);
 			
 			// TODO: Have each robot update itself using swarm algorithm			
-			wheelSpeeds currentSpeeds;
+			WheelSpeeds currentSpeeds;
 			
-			fc.differentialDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
+			fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
     	}	
     }
 	return 0;

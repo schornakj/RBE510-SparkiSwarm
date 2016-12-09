@@ -5,6 +5,8 @@
 #include <string>
 #include <cmath>
 
+using namespace std;
+
 struct SensorData {
 	float distance;
 	float theta;
@@ -16,11 +18,12 @@ struct Reading {
 	int id;
 	vector<SensorData> robotData;
 	SensorData goalData;
+	Reading(int id,vector<SensorData> robotData, SensorData goalData): id(id), robotData(robotData),goalData(goalData) {}
 };
 
 typedef vector<SensorData> TVecData;
 
-typedef pair<float,float> wheelSpeeds; // first is left, second is right
+typedef pair<float,float> WheelSpeeds; // first is left, second is right
 
 SensorData AddVectors(SensorData inputA, SensorData inputB) { // I don't think we should keep this in here
 	float xA, xB, xC, yA, yB, yC;
