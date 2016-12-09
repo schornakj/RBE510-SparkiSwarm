@@ -23,7 +23,7 @@ Robot getRobot(int id, FieldData data){
 	return Robot(-1);
 }
 
-/*
+
 Entity getEntity(int id, FieldData data){
 	Entity entity(id);
 	bool found = false;
@@ -35,7 +35,7 @@ Entity getEntity(int id, FieldData data){
 	}
 	return Entity(-1);	
 }
-*/
+
 
 // For a specific robot, measure the distances and angles to all its neighbors. Return a vector of readings for neighbors closer than the specified threshold.	
 vector<SensorData> SimulateSensor(int inputID, FieldData data, float sensorThresholdCm) {
@@ -43,18 +43,19 @@ vector<SensorData> SimulateSensor(int inputID, FieldData data, float sensorThres
 	//cout << "Simulating sensor" << endl;
 	vector<SensorData> output;
 	
-	//float pixelsPerCm = (getEntity(202, data).x() - getEntity(200,data).x())/231.14;
-	float pixelsPerCm = 1;
+	float pixelsPerCm = (getEntity(202, data).x() - getEntity(200,data).x())/231.14;
+	//cout << "Px/Cm: " << pixelsPerCmNew << endl;
+	//float pixelsPerCm = 1;
 
 	Robot thisRobot = getRobot(inputID, data);
 	
 	for(unsigned i = 0; i < data.robots.size(); i++){	
 		if(data.robots[i].id() != inputID) {
-			float distance = sqrt(pow(data.robots[i].x() - thisRobot.x(),2) + pow(data.robots[i].y() - thisRobot.y(),2));
+			float distance = sqrt(pow(data.robots[i].x() - thisRobot.x(),2) + pow(data.robots[i].y() - thisRobot.y(),2))/pixelsPerCm;
 		
 			if (distance <= sensorThresholdCm){
 				float angle = atan2(data.robots[i].y() - thisRobot.y(), data.robots[i].x() - thisRobot.x());
-				SensorData neighborMeasurement = SensorData(distance/pixelsPerCm, angle);
+				SensorData neighborMeasurement = SensorData(distance, angle);
 				//cout << neighborMeasurement.distance << " " << neighborMeasurement.theta << endl;
 				output.push_back(neighborMeasurement);
 			}

@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	FieldComputer fc(ip);
 	fc.enableVerbose();
 	
-	float sensorThreshold = 500;
+	float sensorThreshold = 50;
 
 	FieldData data = fc.getFieldData();
 
