@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	FieldComputer fc(ip);
 	fc.enableVerbose();
 	
-	float sensorThreshold = 30;
+	float sensorThreshold = 500;
 
 	FieldData data = fc.getFieldData();
 
@@ -28,13 +28,23 @@ int main(int argc, char *argv[])
 			// for each robot, get its ID and use the ID to simulate its sensor readings
 			vector<SensorData> currentSensor = SimulateSensor(data.robots[i].id(), data, sensorThreshold);
 			Reading currentReading(data.robots[i].id(), currentSensor, goalData);
+
+			cout << "Robot #" << currentReading.id << " sees neighbors at:" << endl;
+
 			
-			// TODO: Have each robot update itself using swarm algorithm			
-			WheelSpeeds currentSpeeds(1,1);
+			//cout << currentSensor[0].distance << endl;
+
+			
+			for (vector<SensorData>::iterator j = currentReading.robotData.begin(); j != currentReading.robotData.end(); ++j) {
+				cout << j->distance << " " << j->theta << endl;
+			}
 			
 
-			cout << "Driving ID2 at : " << currentSpeeds.first << " " << currentSpeeds.second << endl;
-			fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
+
+			// TODO: Have each robot update itself using swarm algorithm			
+			WheelSpeeds currentSpeeds(0,0);
+			
+			//fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
 
     	}	
     }
