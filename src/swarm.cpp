@@ -30,9 +30,12 @@ int main(int argc, char *argv[])
 			Reading currentReading(data.robots[i].id(), currentSensor, goalData);
 			
 			// TODO: Have each robot update itself using swarm algorithm			
-			WheelSpeeds currentSpeeds;
+			WheelSpeeds currentSpeeds(1,1);
 			
+
+			cout << "Driving ID2 at : " << currentSpeeds.first << " " << currentSpeeds.second << endl;
 			fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
+
     	}	
     }
 	return 0;
