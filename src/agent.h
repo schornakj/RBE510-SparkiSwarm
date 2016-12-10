@@ -16,7 +16,10 @@ const float Epsilon=0.01;
 const float TargetDistance=15; //Distance robot-robot in cm
 const float Gain=1000;
 const float Exponent=2;
+const float BaseSpeed=1;
 const float MaxSpeed=1;
+const float SoftTurnThreshold = 0.175;
+const float HardTurnThreshold = 1.222;
 
 
 //const float ArenaWidth=231.14; //in X direction
@@ -51,10 +54,12 @@ public:
     
     SensorData FlockingVector();
     
-    WheelSpeeds SpeedFromVector();
+    WheelSpeeds SpeedFromVector(SensorData  s_vector);
     
     WheelSpeeds ControlStep(Reading s_readings);
     
+    SensorData AddVectors(SensorData inputA, SensorData inputB);
+
     private:
     SensorData m_tVectorToGoal;
     TVecData m_tReadings;

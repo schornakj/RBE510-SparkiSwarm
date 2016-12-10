@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <ctime>
 #include "sensor.h"
 #include "sensordata.h"
 #include "rbe510.h"
@@ -18,16 +19,23 @@ int main(int argc, char *argv[])
 
 	FieldData data = fc.getFieldData();
 
+	double runtime = 5*CLOCKS_PER_SEC; // 10 seconds in clock ticks
+
+	clock_t start;
+	start = clock();
+
+	pair<float,float>goalPosition(300,300);
+
     while(true) {
 		data = fc.getFieldData();
 		
-		SensorData goalData(0,0);
+		//SensorData goalData(300,300);
 		
 		// update robot sensor readings
     	for(unsigned i = 0; i < data.robots.size(); i++){
 			// for each robot, get its ID and use the ID to simulate its sensor readings
 			vector<SensorData> currentSensor = SimulateSensor(data.robots[i].id(), data, sensorThreshold);
-			Reading currentReading(data.robots[i].id(), currentSensor, goalData);
+			Reading currentReading(data.robots[i].id(), currentSensor, SimulateGoalSensor(data.robots[i].id(), data, goalPosition));
 
 			cout << "Robot #" << currentReading.id << " sees neighbors at:" << endl;
 
@@ -41,12 +49,20 @@ int main(int argc, char *argv[])
 			
 
 
-			// TODO: Have each robot update itself using swarm algorithm			
-			WheelSpeeds currentSpeeds(0,0);
+			// TODO: Have each robot update itself using swarm algorithm
+			Agent a;		
+			WheelSpeeds currentSpeeds = a.ControlStep(currentReading);
 			
-			//fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
+			fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
 
+			if ((clock() - start)/CLOCKS_PER_SEC >= runtime) {
+				break;
+			}
     	}	
     }
+    for(unsigned i = 0; i < data.robots.size(); i++){
+    	fc.arcadeDrive(data.robots[i].id(), 0, 0);
+    }
+
 	return 0;
 }

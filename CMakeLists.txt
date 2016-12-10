@@ -22,7 +22,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIBRARY})
 
 add_executable(swarm_server ${PROJECT_SOURCE_DIR}/src/swarm_server.cpp ${PROJECT_SOURCE_DIR}/src/rbe510.cpp)
-add_executable(swarm ${PROJECT_SOURCE_DIR}/src/swarm.cpp ${PROJECT_SOURCE_DIR}/src/rbe510.cpp)
+add_executable(swarm ${PROJECT_SOURCE_DIR}/src/swarm.cpp ${PROJECT_SOURCE_DIR}/src/rbe510.cpp ${PROJECT_SOURCE_DIR}/src/agent.cpp)
 
 target_link_libraries (swarm_server ${OpenCV_LIBS})
 target_link_libraries (swarm_server ${CMAKE_THREAD_LIBS_INIT})

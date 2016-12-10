@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/swarm.dir/src/swarm.cpp.o"
   "CMakeFiles/swarm.dir/src/rbe510.cpp.o"
+  "CMakeFiles/swarm.dir/src/agent.cpp.o"
   "swarm.pdb"
   "swarm"
 )

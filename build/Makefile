@@ -136,6 +136,33 @@ swarm_server/fast:
 	$(MAKE) -f CMakeFiles/swarm_server.dir/build.make CMakeFiles/swarm_server.dir/build
 .PHONY : swarm_server/fast
 
+src/agent.o: src/agent.cpp.o
+
+.PHONY : src/agent.o
+
+# target to build an object file
+src/agent.cpp.o:
+	$(MAKE) -f CMakeFiles/swarm.dir/build.make CMakeFiles/swarm.dir/src/agent.cpp.o
+.PHONY : src/agent.cpp.o
+
+src/agent.i: src/agent.cpp.i
+
+.PHONY : src/agent.i
+
+# target to preprocess a source file
+src/agent.cpp.i:
+	$(MAKE) -f CMakeFiles/swarm.dir/build.make CMakeFiles/swarm.dir/src/agent.cpp.i
+.PHONY : src/agent.cpp.i
+
+src/agent.s: src/agent.cpp.s
+
+.PHONY : src/agent.s
+
+# target to generate assembly for a file
+src/agent.cpp.s:
+	$(MAKE) -f CMakeFiles/swarm.dir/build.make CMakeFiles/swarm.dir/src/agent.cpp.s
+.PHONY : src/agent.cpp.s
+
 src/rbe510.o: src/rbe510.cpp.o
 
 .PHONY : src/rbe510.o
@@ -230,6 +257,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... swarm"
 	@echo "... swarm_server"
+	@echo "... src/agent.o"
+	@echo "... src/agent.i"
+	@echo "... src/agent.s"
 	@echo "... src/rbe510.o"
 	@echo "... src/rbe510.i"
 	@echo "... src/rbe510.s"

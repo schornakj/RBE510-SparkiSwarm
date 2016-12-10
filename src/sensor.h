@@ -64,6 +64,23 @@ vector<SensorData> SimulateSensor(int inputID, FieldData data, float sensorThres
 	return output;
 }
 
+SensorData SimulateGoalSensor(int inputID, FieldData data, pair<float,float> goalPosition) {
+	// Use field data derived from the server's computer vision algorithm to measure the distance to neighboring robots.
+	//cout << "Simulating sensor" << endl;
+	
+	float pixelsPerCm = (getEntity(202, data).x() - getEntity(200,data).x())/231.14;
+	//cout << "Px/Cm: " << pixelsPerCmNew << endl;
+	//float pixelsPerCm = 1;
+
+	Robot thisRobot = getRobot(inputID, data);
+
+	float distance = sqrt(pow(goalPosition.first - thisRobot.x(),2) + pow(goalPosition.second - thisRobot.y(),2))/pixelsPerCm;
+	float angle = atan2(goalPosition.second - thisRobot.y(), goalPosition.first - thisRobot.x());
+	SensorData output = SensorData(distance, angle);
+
+	return output;
+}
+
 // Get the sensor readings for a specific robot ID
 Reading GetRobotSensorReading(int inputID, vector<Reading> readings) {
 	for (unsigned i = 0; i < readings.size(); i++) {
