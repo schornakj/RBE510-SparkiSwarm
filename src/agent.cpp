@@ -20,12 +20,12 @@ SensorData Agent::FlockingVector(){
             float fTemp;
             if (it->distance<1.8*TargetDistance) {
                 fTemp=GeneralizedLennardJones(it->distance);
+                SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta));
             }
-            SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta));
         }
         SAccum.distance=SAccum.distance/m_tReadings.size();
         if (SAccum.distance > MaxSpeed) {
-            SAccum.distance=MaxSpeed;
+            SAccum.distance = MaxSpeed;
         }
         else if(SAccum.distance < -MaxSpeed) {
             SAccum.distance = -MaxSpeed;
@@ -85,7 +85,7 @@ WheelSpeeds Agent::ControlStep(Reading s_readings){
     return output;
 }
 
-SensorData Agent::AddVectors(SensorData inputA, SensorData inputB) { // I don't think we should keep this in here
+SensorData Agent::AddVectors(SensorData inputA, SensorData inputB) {
     float xA, xB, xC, yA, yB, yC;
     
     xA = inputA.distance*cos(inputA.theta);
