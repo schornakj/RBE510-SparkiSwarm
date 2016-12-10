@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include <ctime>
+//#include <ctime>
 #include "sensor.h"
 #include "sensordata.h"
 #include "rbe510.h"
@@ -13,16 +13,17 @@ int main(int argc, char *argv[])
 {
 	string ip = string("127.0.0.1");
 	FieldComputer fc(ip);
-	fc.enableVerbose();
+	//fc.enableVerbose();
+	fc.disableVerbose();
 	
 	float sensorThreshold = 50;
 
 	FieldData data = fc.getFieldData();
 
-	double runtime = 5*CLOCKS_PER_SEC; // 10 seconds in clock ticks
+	//double runtime = 5*CLOCKS_PER_SEC; // 10 seconds in clock ticks
 
-	clock_t start;
-	start = clock();
+	//clock_t start;
+	//start = clock();
 
 	pair<float,float>goalPosition(300,300);
 
@@ -37,14 +38,14 @@ int main(int argc, char *argv[])
 			vector<SensorData> currentSensor = SimulateSensor(data.robots[i].id(), data, sensorThreshold);
 			Reading currentReading(data.robots[i].id(), currentSensor, SimulateGoalSensor(data.robots[i].id(), data, goalPosition));
 
-			cout << "Robot #" << currentReading.id << " sees neighbors at:" << endl;
+			cout << "Robot #" << currentReading.id << endl;
 
 			
 			//cout << currentSensor[0].distance << endl;
 
 			
 			for (vector<SensorData>::iterator j = currentReading.robotData.begin(); j != currentReading.robotData.end(); ++j) {
-				cout << j->distance << " " << j->theta << endl;
+				cout << j->distance << " " << j->theta*180/PI << endl;
 			}
 			
 
@@ -55,9 +56,10 @@ int main(int argc, char *argv[])
 			
 			fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
 
-			if ((clock() - start)/CLOCKS_PER_SEC >= runtime) {
-				break;
-			}
+			//if ((clock() - start)/CLOCKS_PER_SEC >= runtime) {
+				//break;
+			//}
+			//sleep(100);
     	}	
     }
     for(unsigned i = 0; i < data.robots.size(); i++){

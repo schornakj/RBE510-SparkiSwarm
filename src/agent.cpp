@@ -9,7 +9,7 @@ Agent::Agent(){
 float Agent::GeneralizedLennardJones(float f_Distance){
     float fNormDistExp = pow(TargetDistance/f_Distance,Exponent);
     float output = -Gain/f_Distance*(fNormDistExp*fNormDistExp-fNormDistExp);
-    cout << "Lennard Jones: " << output << endl;
+    cout << "LJ " << output << endl;
     return output;
 }
 
@@ -18,10 +18,11 @@ SensorData Agent::FlockingVector(){
         SensorData SAccum;
         for (TVecData::iterator it=m_tReadings.begin(); it!=m_tReadings.end(); ++it) {
             float fTemp;
-            if (it->distance<1.8*TargetDistance) {
-                fTemp=GeneralizedLennardJones(it->distance);
-                SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta));
-            }
+            //cout << "Distance: " << it->distance << " vs. " << 2.2*TargetDistance << endl;
+            //if (it->distance < 2.2*TargetDistance) {
+            fTemp=GeneralizedLennardJones(it->distance);
+            SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta));
+            //}
         }
         SAccum.distance=SAccum.distance/m_tReadings.size();
         if (SAccum.distance > MaxSpeed) {
@@ -78,10 +79,10 @@ WheelSpeeds Agent::ControlStep(Reading s_readings){
 
     SensorData vectorSum = AddVectors(SensorData(0,0),FlockingVector());
 
-    cout << "Flocking vector: " << vectorSum.distance << " " << vectorSum.theta << endl;
+    cout << "FV " << vectorSum.distance << " " << vectorSum.theta*180/PI << endl;
 
     WheelSpeeds output = SpeedFromVector(vectorSum);
-    cout << "Left Speed: " << output.first << '\t'<<"Right Speed: " << output.second << endl;
+    //cout << "Left Speed: " << output.first << '\t'<<"Right Speed: " << output.second << endl;
     return output;
 }
 

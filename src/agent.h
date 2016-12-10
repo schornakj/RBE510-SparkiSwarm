@@ -13,7 +13,7 @@ using namespace std;
 
 const float PI = 3.1415927;
 const float Epsilon=0.01;
-const float TargetDistance=15; //Distance robot-robot in cm
+const float TargetDistance=25; //Distance robot-robot in cm
 const float Gain=1000;
 const float Exponent=2;
 const float BaseSpeed=1;

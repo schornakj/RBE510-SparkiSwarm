@@ -54,7 +54,7 @@ vector<SensorData> SimulateSensor(int inputID, FieldData data, float sensorThres
 			float distance = sqrt(pow(data.robots[i].x() - thisRobot.x(),2) + pow(data.robots[i].y() - thisRobot.y(),2))/pixelsPerCm;
 		
 			if (distance <= sensorThresholdCm){
-				float angle = atan2(data.robots[i].y() - thisRobot.y(), data.robots[i].x() - thisRobot.x());
+				float angle = atan2(data.robots[i].y() - thisRobot.y(), data.robots[i].x() - thisRobot.x()) + thisRobot.theta()* 3.14159/180;
 				SensorData neighborMeasurement = SensorData(distance, angle);
 				//cout << neighborMeasurement.distance << " " << neighborMeasurement.theta << endl;
 				output.push_back(neighborMeasurement);
@@ -75,7 +75,7 @@ SensorData SimulateGoalSensor(int inputID, FieldData data, pair<float,float> goa
 	Robot thisRobot = getRobot(inputID, data);
 
 	float distance = sqrt(pow(goalPosition.first - thisRobot.x(),2) + pow(goalPosition.second - thisRobot.y(),2))/pixelsPerCm;
-	float angle = atan2(goalPosition.second - thisRobot.y(), goalPosition.first - thisRobot.x());
+	float angle = atan2(goalPosition.second - thisRobot.y(), goalPosition.first - thisRobot.x()) + thisRobot.theta();
 	SensorData output = SensorData(distance, angle);
 
 	return output;
