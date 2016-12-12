@@ -1,5 +1,6 @@
 #include "agent.h"
 
+
 using namespace std;
 
 Agent::Agent(){
@@ -19,17 +20,18 @@ SensorData Agent::FlockingVector(){
         for (TVecData::iterator it=m_tReadings.begin(); it!=m_tReadings.end(); ++it) {
             float fTemp;
             //cout << "Distance: " << it->distance << " vs. " << 2.2*TargetDistance << endl;
-            //if (it->distance < 2.2*TargetDistance) {
-            fTemp=GeneralizedLennardJones(it->distance);
-            SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta));
-            //}
+            if (it->distance < 1.8*TargetDistance) {
+            	fTemp=GeneralizedLennardJones(it->distance);
+            	cout << "Theta " << it->theta*180/PI << endl;
+            	SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta*180/PI));
+            }
         }
         SAccum.distance=SAccum.distance/m_tReadings.size();
-        if (SAccum.distance > MaxSpeed) {
-            SAccum.distance = MaxSpeed;
+        if (SAccum.distance > MaxSpeed/2) {
+            SAccum.distance = MaxSpeed/2;
         }
-        else if(SAccum.distance < -MaxSpeed) {
-            SAccum.distance = -MaxSpeed;
+        else if(SAccum.distance < -MaxSpeed/2) {
+            SAccum.distance = -MaxSpeed/2;
         }
         return SAccum;
     }
@@ -61,39 +63,49 @@ WheelSpeeds Agent::SpeedFromVector(SensorData  s_vector){
     }
 
     float leftSpeed, rightSpeed = 0;
-    if (s_vector.theta > 0) {
-        leftSpeed = fSpeed1;
-        rightSpeed = fSpeed2;
-    } else {
+    if (s_vector.theta > 0 && s_vector.theta < PI) {
         leftSpeed = fSpeed2;
-        rightSpeed = fSpeed1;        
+        rightSpeed = fSpeed1;
+    } else {
+        leftSpeed = fSpeed1;
+        rightSpeed = fSpeed2;        
     }
-
+    cout << "Left Speed: " << leftSpeed << '\t'<<"Right Speed: " << rightSpeed << endl;
     return pair<float,float>(leftSpeed,rightSpeed);
 }
 
 WheelSpeeds Agent::ControlStep(Reading s_readings){
-    m_tVectorToGoal=s_readings.goalData;
+	if (s_readings.goalData.distance < MaxSpeed/2){
+    	m_tVectorToGoal=s_readings.goalData;
+	}
+	else {
+		m_tVectorToGoal=SensorData(MaxSpeed/2,s_readings.goalData.theta);
+	}
     //cout << "Goal: " << s_readings.goalData.distance <<'\t'<<s_readings.goalData.theta << endl;
     m_tReadings=s_readings.robotData;
 
+
+
+    //SensorData vectorSum = AddVectors(m_tVectorToGoal,FlockingVector());
     SensorData vectorSum = AddVectors(SensorData(0,0),FlockingVector());
 
     cout << "FV " << vectorSum.distance << " " << vectorSum.theta*180/PI << endl;
 
     WheelSpeeds output = SpeedFromVector(vectorSum);
-    //cout << "Left Speed: " << output.first << '\t'<<"Right Speed: " << output.second << endl;
+    
     return output;
 }
 
 SensorData Agent::AddVectors(SensorData inputA, SensorData inputB) {
     float xA, xB, xC, yA, yB, yC;
+    //cout << "Length A " << inputA.distance << " Length B: " << inputB.distance << endl;
+    //cout << "Angle A: " << inputA.theta << " Angle B: " << inputB.theta << endl;
     
-    xA = inputA.distance*cos(inputA.theta);
-    xB = inputB.distance*cos(inputB.theta);
+    xA = inputA.distance*cos(inputA.theta*PI/180);
+    xB = inputB.distance*cos(inputB.theta*PI/180);
     
-    yA = inputA.distance*sin(inputA.theta);
-    yB = inputB.distance*sin(inputB.theta);
+    yA = inputA.distance*sin(inputA.theta*PI/180);
+    yB = inputB.distance*sin(inputB.theta*PI/180);
     
     xC = xA + xB;
     yC = yA + yB;
