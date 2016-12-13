@@ -1,0 +1,78 @@
+Requested field update
+ - Robot id: 4
+x: 236
+y: 366.75
+theta: 94.4327
+width: 64.6935
+height: 57.1074
+Requested to drive id: 4 with speed: 1 and sway: -1
+Requested to drive id: 4 with speed: 0 and sway: 0
+ - Robot id: 5
+x: 109.5
+y: 250.75
+theta: 5.92458
+width: 53.2846
+height: 61.5325
+Requested to drive id: 5 with speed: 1 and sway: -1
+Requested to drive id: 5 with speed: 0 and sway: 0
+ - Robot id: 3
+x: 233
+y: 129.75
+theta: 271.958
+width: 58.5342
+height: 56.1805
+Requested to drive id: 3 with speed: 1 and sway: -1
+Requested to drive id: 3 with speed: 0 and sway: 0
+ - Robot id: 2
+x: 346.25
+y: 239.25
+theta: 182.675
+width: 53.5584
+height: 56.6083
+Requested to drive id: 2 with speed: 1 and sway: -1
+Requested to drive id: 2 with speed: 0 and sway: 0
+ - Entity id: 200
+x: 50
+y: 50
+theta: 90
+width: 53
+height: 47.0425
+ - Entity id: 202
+x: 1230
+y: 49.5
+theta: 91.0809
+width: 53.0094
+height: 47.0425
+ - Entity id: 111
+x: 887.5
+y: 268.25
+theta: 90.703
+width: 81.5061
+height: 74.0152
+ - Entity id: 203
+x: 1230
+y: 669.5
+theta: 88.9191
+width: 53.0094
+height: 45.0999
+ - Entity id: 201
+x: 50
+y: 669.25
+theta: 93.2095
+width: 53.584
+height: 45.025
+Requested field update for 4, 200
+ - Robot id: 5
+x: 109.25
+y: 250.75
+theta: 5.98061
+width: 52.7873
+height: 61.5508
+Requested to drive id: 5 with speed: 1 and sway: -1
+Requested to drive id: 5 with speed: 0 and sway: 0
+ - Entity id: 200
+x: 50
+y: 50
+theta: 90
+width: 53
+height: 47.0425
