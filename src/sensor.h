@@ -81,7 +81,7 @@ SensorData SimulateGoalSensor(int inputID, FieldData data, int goalID) {
 
 	float angle = fmod(atan2(goalPosition.second - thisRobot.y()/pixelsPerCm, goalPosition.first - thisRobot.x()/pixelsPerCm)*180/3.14159 + thisRobot.theta(),360);
 
-	SensorData output = SensorData(distance, angle);
+	SensorData output = SensorData(distance, angle*3.14159/180);
 
 	//cout << "Goal Position: " << goalPosition.first << " " << goalPosition.second << endl;
 	//cout << "Goal Vector: " << output.distance << " " << output.theta << endl;

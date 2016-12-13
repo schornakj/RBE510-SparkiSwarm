@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 			Agent a;		
 			WheelSpeeds currentSpeeds = a.ControlStep(currentReading);
 			
-			//fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
+			fc.arcadeDrive(data.robots[i].id(), currentSpeeds.first, currentSpeeds.second);
 
 			//if ((clock() - start)/CLOCKS_PER_SEC >= runtime) {
 				//break;

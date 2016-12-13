@@ -23,7 +23,8 @@ SensorData Agent::FlockingVector(){
             if (it->distance < 1.8*TargetDistance) {
             	fTemp=GeneralizedLennardJones(it->distance);
             	cout << "Theta " << it->theta*180/PI << endl;
-            	SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta*180/PI));
+            	SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta));
+
             }
         }
         SAccum.distance=SAccum.distance/m_tReadings.size();
@@ -33,6 +34,7 @@ SensorData Agent::FlockingVector(){
         else if(SAccum.distance < -MaxSpeed/2) {
             SAccum.distance = -MaxSpeed/2;
         }
+        cout << "SAcum " << SAccum.distance << " " << SAccum.theta*180/PI << endl;
         return SAccum;
     }
     else {
@@ -81,15 +83,15 @@ WheelSpeeds Agent::ControlStep(Reading s_readings){
 	else {
 		m_tVectorToGoal=SensorData(MaxSpeed/2,s_readings.goalData.theta);
 	}
-    //cout << "Goal: " << s_readings.goalData.distance <<'\t'<<s_readings.goalData.theta << endl;
+    cout << "Goal: " << s_readings.goalData.distance <<'\t'<<s_readings.goalData.theta << endl;
     m_tReadings=s_readings.robotData;
 
 
 
-    //SensorData vectorSum = AddVectors(m_tVectorToGoal,FlockingVector());
-    SensorData vectorSum = AddVectors(SensorData(0,0),FlockingVector());
+    SensorData vectorSum = AddVectors(m_tVectorToGoal,FlockingVector());
+    //SensorData vectorSum = AddVectors(SensorData(0,0),FlockingVector());
 
-    cout << "FV " << vectorSum.distance << " " << vectorSum.theta*180/PI << endl;
+    cout << "FV " << vectorSum.distance << " " << vectorSum.theta << endl;
 
     WheelSpeeds output = SpeedFromVector(vectorSum);
     
@@ -101,11 +103,11 @@ SensorData Agent::AddVectors(SensorData inputA, SensorData inputB) {
     //cout << "Length A " << inputA.distance << " Length B: " << inputB.distance << endl;
     //cout << "Angle A: " << inputA.theta << " Angle B: " << inputB.theta << endl;
     
-    xA = inputA.distance*cos(inputA.theta*PI/180);
-    xB = inputB.distance*cos(inputB.theta*PI/180);
+    xA = inputA.distance*cos(inputA.theta);
+    xB = inputB.distance*cos(inputB.theta);
     
-    yA = inputA.distance*sin(inputA.theta*PI/180);
-    yB = inputB.distance*sin(inputB.theta*PI/180);
+    yA = inputA.distance*sin(inputA.theta);
+    yB = inputB.distance*sin(inputB.theta);
     
     xC = xA + xB;
     yC = yA + yB;
