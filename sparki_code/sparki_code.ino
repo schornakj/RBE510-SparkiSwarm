@@ -1,6 +1,6 @@
 #include <Sparki.h>  // include the sparki library
 
-#define ID 5
+#define ID 0
 #define DATA_LENGTH 300
 
 bool started = false;

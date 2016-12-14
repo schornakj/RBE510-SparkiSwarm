@@ -10,7 +10,7 @@ Agent::Agent(){
 float Agent::GeneralizedLennardJones(float f_Distance){
     float fNormDistExp = pow(TargetDistance/f_Distance,Exponent);
     float output = -Gain/f_Distance*(fNormDistExp*fNormDistExp-fNormDistExp);
-    cout << "LJ " << output << endl;
+    cout << "Lennard Jones Potential : " << output << endl;
     return output;
 }
 
@@ -22,7 +22,7 @@ SensorData Agent::FlockingVector(){
             //cout << "Distance: " << it->distance << " vs. " << 2.2*TargetDistance << endl;
             if (it->distance < 1.8*TargetDistance) {
             	fTemp=GeneralizedLennardJones(it->distance);
-            	cout << "Theta " << it->theta*180/PI << endl;
+            	//cout << "Theta " << it->theta*180/PI << endl;
             	SAccum=AddVectors(SAccum,SensorData(fTemp,it->theta));
 
             }
@@ -34,7 +34,7 @@ SensorData Agent::FlockingVector(){
         else if(SAccum.distance < -MaxSpeed/2) {
             SAccum.distance = -MaxSpeed/2;
         }
-        cout << "SAcum " << SAccum.distance << " " << SAccum.theta*180/PI << endl;
+        //cout << "SAcum " << SAccum.distance << " " << SAccum.theta*180/PI << endl;
         return SAccum;
     }
     else {
@@ -72,7 +72,7 @@ WheelSpeeds Agent::SpeedFromVector(SensorData  s_vector){
         leftSpeed = fSpeed1;
         rightSpeed = fSpeed2;        
     }
-    cout << "Left Speed: " << leftSpeed << '\t'<<"Right Speed: " << rightSpeed << endl;
+    //cout << "Left Speed: " << leftSpeed << '\t'<<"Right Speed: " << rightSpeed << endl;
     return pair<float,float>(leftSpeed,rightSpeed);
 }
 
@@ -83,15 +83,13 @@ WheelSpeeds Agent::ControlStep(Reading s_readings){
 	else {
 		m_tVectorToGoal=SensorData(MaxSpeed/2,s_readings.goalData.theta);
 	}
-    cout << "Goal: " << s_readings.goalData.distance <<'\t'<<s_readings.goalData.theta << endl;
+    cout << "Goal Vector: " << s_readings.goalData.distance <<'\t'<<s_readings.goalData.theta<<endl;
     m_tReadings=s_readings.robotData;
 
-
+	cout << "Flocking Vector: " << FlockingVector().distance <<'\t'<< FlockingVector().theta<<endl;
 
     SensorData vectorSum = AddVectors(m_tVectorToGoal,FlockingVector());
     //SensorData vectorSum = AddVectors(SensorData(0,0),FlockingVector());
-
-    cout << "FV " << vectorSum.distance << " " << vectorSum.theta << endl;
 
     WheelSpeeds output = SpeedFromVector(vectorSum);
     

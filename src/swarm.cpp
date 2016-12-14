@@ -41,16 +41,17 @@ int main(int argc, char *argv[])
 			vector<SensorData> currentSensor = SimulateSensor(data.robots[i].id(), data, sensorThreshold);
 			Reading currentReading(data.robots[i].id(), currentSensor, SimulateGoalSensor(data.robots[i].id(), data, goalID));
 
-			cout << "Robot #" << currentReading.id << endl;
+			cout << "Robot # " << currentReading.id << endl;
+			cout << "Absolute Position : " << data.robots[i].x() <<'\t' << data.robots[i].y()<<endl;
 			cout << "Measured Heading: " << data.robots[i].theta() << endl;
 
 			
 			//cout << currentSensor[0].distance << endl;
 
 			
-			for (vector<SensorData>::iterator j = currentReading.robotData.begin(); j != currentReading.robotData.end(); ++j) {
-				cout << j->distance << " " << j->theta*180/PI << endl;
-			}
+			//for (vector<SensorData>::iterator j = currentReading.robotData.begin(); j != currentReading.robotData.end(); ++j) {
+			//	cout << j->distance << " " << j->theta*180/PI << endl;
+			//}
 			
 
 
