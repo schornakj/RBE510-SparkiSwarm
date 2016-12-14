@@ -50,6 +50,8 @@ vector<SensorData> SimulateSensor(int inputID, FieldData data, float sensorThres
 	//float pixelsPerCm = 1;
 
 	Robot thisRobot = getRobot(inputID, data);
+
+	cout << "Metric Position: " <<thisRobot.x()/pixelsPerCm << " " << thisRobot.y()/pixelsPerCm << endl;
 	
 	for(unsigned i = 0; i < data.robots.size(); i++){	
 		if(data.robots[i].id() != inputID) {
@@ -68,12 +70,16 @@ vector<SensorData> SimulateSensor(int inputID, FieldData data, float sensorThres
 
 SensorData SimulateGoalSensor(int inputID, FieldData data, int goalID) {
 	//cout << "Simulating sensor" << endl;
+
+	SensorData output = SensorData(0,0);
 	
 	float pixelsPerCm = (getEntity(202, data).x() - getEntity(200,data).x())/231.14;
 	//cout << "Px/Cm: " << pixelsPerCmNew << endl;
 	//float pixelsPerCm = 1;
+	Robot goal = getRobot(goalID,data);
 
-	pair<float,float>goalPosition(getEntity(goalID,data).x()/pixelsPerCm,getEntity(goalID,data).y()/pixelsPerCm);
+
+	pair<float,float>goalPosition(goal.x()/pixelsPerCm,goal.y()/pixelsPerCm);
 
 	Robot thisRobot = getRobot(inputID, data);
 
@@ -81,7 +87,9 @@ SensorData SimulateGoalSensor(int inputID, FieldData data, int goalID) {
 
 	float angle = fmod(atan2(goalPosition.second - thisRobot.y()/pixelsPerCm, goalPosition.first - thisRobot.x()/pixelsPerCm)*180/3.14159 + thisRobot.theta(),360);
 
-	SensorData output = SensorData(distance, angle*3.14159/180);
+	if (goal.id() != -1){
+		output = SensorData(distance, angle*3.14159/180);
+	}
 
 	//cout << "Goal Position: " << goalPosition.first << " " << goalPosition.second << endl;
 	//cout << "Goal Vector: " << output.distance << " " << output.theta << endl;

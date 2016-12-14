@@ -18,7 +18,9 @@ int main(int argc, char *argv[])
 	
 	float sensorThreshold = 50;
 
-	int goalID = 111;
+	//int goalID = 111;
+	int goalID = 1;
+
 
 	FieldData data = fc.getFieldData();
 
@@ -28,6 +30,7 @@ int main(int argc, char *argv[])
 	//start = clock();
 
 	//pair<float,float>goalPosition(50,50);
+	int count = 0;
 
     while(true) {
 		data = fc.getFieldData();
@@ -35,15 +38,18 @@ int main(int argc, char *argv[])
 		//SensorData goalData(300,300);
 		
 		// update robot sensor readings
+		cout << "Update # " << count << endl << endl;;
 
     	for(unsigned i = 0; i < data.robots.size(); i++){
 			// for each robot, get its ID and use the ID to simulate its sensor readings
+    		cout << "Robot # " << data.robots[i].id() << endl;
+
 			vector<SensorData> currentSensor = SimulateSensor(data.robots[i].id(), data, sensorThreshold);
 			Reading currentReading(data.robots[i].id(), currentSensor, SimulateGoalSensor(data.robots[i].id(), data, goalID));
 
-			cout << "Robot # " << currentReading.id << endl;
-			cout << "Absolute Position : " << data.robots[i].x() <<'\t' << data.robots[i].y()<<endl;
-			cout << "Measured Heading: " << data.robots[i].theta() << endl;
+			
+			cout << "Pixel Position: " << data.robots[i].x() <<'\t' << data.robots[i].y()<<endl;
+			cout << "Heading: " << data.robots[i].theta() << endl;
 
 			
 			//cout << currentSensor[0].distance << endl;
@@ -64,9 +70,11 @@ int main(int argc, char *argv[])
 			//if ((clock() - start)/CLOCKS_PER_SEC >= runtime) {
 				//break;
 			//}
-			
+			cout << endl;
+			count++;
     	}
     	usleep(10000);	
+    	cout << endl << endl;
     }
     /*
     for(unsigned i = 0; i < data.robots.size(); i++){

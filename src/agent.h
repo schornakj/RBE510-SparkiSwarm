@@ -15,10 +15,10 @@ using namespace std;
 
 const float PI = 3.1415927;
 const float Epsilon=0.01;
-const float TargetDistance=35; //Distance robot-robot in cm
+const float TargetDistance=30; //Distance robot-robot in cm
 const float Gain=1000;
 const float Exponent=2;
-const float BaseSpeed=1;
+const float BaseSpeed=0.5;
 const float MaxSpeed=1;
 const float SoftTurnThreshold = 0.175;
 const float HardTurnThreshold = 1.222;
